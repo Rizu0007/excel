@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { LeadStorage } from '@/lib/localStorageDB';
 import * as XLSX from 'xlsx';
 import { Bell, X, CheckCircle, AlertCircle, Download, RefreshCw, User, Mail, Phone, Briefcase, UserCircle } from 'lucide-react';
+import { LeadStorage } from '@/lib/localStorageDB';
 
 const LeadForm = () => {
   const [formData, setFormData] = useState({
@@ -20,10 +20,13 @@ const LeadForm = () => {
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
+    // Initialize storage on client side
+    leadStorage.initializeStorage();
     const leads = leadStorage.getAllLeads();
     setSavedLeadsCount(leads.length);
   }, []);
 
+  
   const showStatusNotification = (type, message) => {
     setStatus({ type, message });
     setShowNotification(true);
