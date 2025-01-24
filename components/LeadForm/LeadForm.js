@@ -172,14 +172,14 @@ const LeadForm = () => {
               {loading ? 'Saving...' : 'Save Lead'}
             </button>
 
-            <button
+            {/* <button
               type="button"
               onClick={handleExport}
               className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-lg font-medium transition duration-200 flex items-center justify-center gap-2"
             >
               <Download className="w-5 h-5" />
               Export to Excel
-            </button>
+            </button> */}
           </div>
         </form>
       </div>
