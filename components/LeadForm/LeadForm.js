@@ -142,7 +142,7 @@ const LeadForm = () => {
               { name: "phoneNumber", icon: <Phone />, placeholder: "Phone Number" },
               { name: "brandName", icon: <Briefcase />, placeholder: "Brand Name" },
               { name: "agentName", icon: <UserCircle />, placeholder: "Agent Name" },
-              { name: "socialMedia", icon: <Globe />, placeholder: "Social Media Username" }, // New field
+              { name: "socialMedia", icon: <Globe />, placeholder: "Social Media User Name" }, // New field
               { name: "currentRevenue", icon: <DollarSign />, placeholder: "Current Revenue" }, // New field
               { name: "purposeOfMeeting", icon: <Target />, placeholder: "Purpose of Meeting" }, // New field
             ].map((field, index) => (
