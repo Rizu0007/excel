@@ -56,9 +56,9 @@ const LeadForm = () => {
   const handleExport = () => {
     try {
       const workbook = XLSX.utils.book_new();
-
-      // Format dates in the exported Excel sheet
-      const formattedLeads = savedLeads.map((lead) => ({
+  
+      // Remove 'id' field and format 'createdAt' for export
+      const formattedLeads = savedLeads.map(({ id, ...lead }) => ({
         ...lead,
         createdAt: new Date(lead.createdAt).toLocaleDateString('en-US', {
           year: 'numeric',
@@ -66,7 +66,7 @@ const LeadForm = () => {
           day: 'numeric',
         }),
       }));
-
+  
       const worksheet = XLSX.utils.json_to_sheet(formattedLeads);
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Leads');
       XLSX.writeFile(workbook, 'leads.xlsx');
@@ -75,6 +75,7 @@ const LeadForm = () => {
       showStatusNotification('error', 'Error exporting leads. Please try again.');
     }
   };
+  
 
   const showStatusNotification = (type, message) => {
     setStatus({ type, message });
@@ -98,7 +99,7 @@ const LeadForm = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
       {/* Logo */}
-      <div className="w-full max-w-3xl text-center mb-8">
+      <div className="w-full max-w-3xl text-center mb-">
         <Image
           src="/DigitalDostLogo.webp"
           alt="Logo"
@@ -106,11 +107,10 @@ const LeadForm = () => {
           height={500}
           width={500}
         />
-        <h1 className="text-4xl font-bold text-gray-800">Lead Manager</h1>
       </div>
 
       {/* Total Leads */}
-      <div className="w-full max-w-3xl bg-gray-800 text-white p-4 rounded-xl shadow-lg mb-6 flex justify-between items-center">
+      <div className="w-full max-w-3xl bg-gray-800 text-white p-3 rounded-xl shadow-lg mb-3 flex justify-between items-center">
         <h2 className="text-xl font-semibold">Total Leads Generated</h2>
         <p className="text-2xl font-bold">{savedLeads.length}</p>
       </div>
