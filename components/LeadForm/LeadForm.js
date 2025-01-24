@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
-import { CheckCircle, AlertCircle, Download, RefreshCw, User, Mail, Phone, Briefcase, UserCircle } from 'lucide-react';
+import { CheckCircle, AlertCircle, Download, RefreshCw, User, Mail, Phone, Briefcase, UserCircle, Globe, DollarSign, Target } from 'lucide-react';
 import Image from 'next/image';
 
 const LeadForm = () => {
@@ -11,7 +11,10 @@ const LeadForm = () => {
     email: '',
     phoneNumber: '',
     brandName: '',
-    agentName: ''
+    agentName: '',
+    socialMedia: '',       // New field
+    currentRevenue: '',    // New field
+    purposeOfMeeting: ''   // New field
   });
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
@@ -56,8 +59,8 @@ const LeadForm = () => {
   const handleExport = () => {
     try {
       const workbook = XLSX.utils.book_new();
-  
-      // Remove 'id' field and format 'createdAt' for export
+
+      // Format leads and remove 'id' field
       const formattedLeads = savedLeads.map(({ id, ...lead }) => ({
         ...lead,
         createdAt: new Date(lead.createdAt).toLocaleDateString('en-US', {
@@ -66,7 +69,7 @@ const LeadForm = () => {
           day: 'numeric',
         }),
       }));
-  
+
       const worksheet = XLSX.utils.json_to_sheet(formattedLeads);
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Leads');
       XLSX.writeFile(workbook, 'leads.xlsx');
@@ -75,7 +78,6 @@ const LeadForm = () => {
       showStatusNotification('error', 'Error exporting leads. Please try again.');
     }
   };
-  
 
   const showStatusNotification = (type, message) => {
     setStatus({ type, message });
@@ -92,18 +94,21 @@ const LeadForm = () => {
       email: '',
       phoneNumber: '',
       brandName: '',
-      agentName: ''
+      agentName: '',
+      socialMedia: '',
+      currentRevenue: '',
+      purposeOfMeeting: ''
     });
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
       {/* Logo */}
-      <div className="w-full max-w-3xl text-center mb-">
+      <div className="w-full max-w-3xl text-center mb-4">
         <Image
           src="/DigitalDostLogo.webp"
           alt="Logo"
-          className="mx-auto  mb-4"
+          className="mx-auto mb-4"
           height={500}
           width={500}
         />
@@ -137,6 +142,9 @@ const LeadForm = () => {
               { name: "phoneNumber", icon: <Phone />, placeholder: "Phone Number" },
               { name: "brandName", icon: <Briefcase />, placeholder: "Brand Name" },
               { name: "agentName", icon: <UserCircle />, placeholder: "Agent Name" },
+              { name: "socialMedia", icon: <Globe />, placeholder: "Social Media Username" }, // New field
+              { name: "currentRevenue", icon: <DollarSign />, placeholder: "Current Revenue" }, // New field
+              { name: "purposeOfMeeting", icon: <Target />, placeholder: "Purpose of Meeting" }, // New field
             ].map((field, index) => (
               <div key={index} className="relative">
                 <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">{field.icon}</span>

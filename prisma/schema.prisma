@@ -8,11 +8,14 @@ datasource db {
 }
 
 model Lead {
-  id          String   @id @default(uuid())
-  clientName  String
-  email       String   
-  phoneNumber String
-  brandName   String?
-  agentName   String?
-  createdAt   DateTime @default(now())
+  id              String   @id @default(uuid())
+  clientName      String
+  email           String   
+  phoneNumber     String?
+  brandName       String?
+  agentName       String?
+  createdAt       DateTime @default(now())
+  socialMedia     String?   // New field for social media username
+  currentRevenue  String?    // New field for current revenue
+  purposeOfMeeting String?  // New field for meeting purpose
 }
